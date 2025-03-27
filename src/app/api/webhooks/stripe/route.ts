@@ -17,8 +17,8 @@ export async function POST(req: Request) {
 
 	try {
 		event = stripe.webhooks.constructEvent(body, signature, process.env.STRIPE_WEBHOOK_SECRET!);
-	} catch (err: any) {
-		console.log(`Webhook signature verification failed.`, err.message);
+	} catch (err: unknown) {
+		console.log(`Webhook signature verification failed.`, err instanceof Error ? err.message : String(err));
 		return new Response("Webhook signature verification failed.", { status: 400 });
 	}
 
@@ -38,8 +38,8 @@ export async function POST(req: Request) {
 				console.log(`Unhandled event type: ${event.type}`);
 				break;
 		}
-	} catch (error: any) {
-		console.error(`Error processing webhook (${event.type}):`, error);
+	} catch (error: unknown) {
+		console.error(`Error processing webhook (${event.type}):`, error instanceof Error ? error.message : String(error));
 		return new Response("Error processing webhook", { status: 400 });
 	}
 

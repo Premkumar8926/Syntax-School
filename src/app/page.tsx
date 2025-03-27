@@ -1,4 +1,3 @@
-import { ConvexHttpClient } from "convex/browser";
 import { api } from "../../convex/_generated/api";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
@@ -11,7 +10,7 @@ import PurchaseButton from "@/components/PurchaseButton";
 import { fetchQuery } from "convex/nextjs";
 
 export default async function Home() {
-	const convex = new ConvexHttpClient(process.env.NEXT_PUBLIC_CONVEX_URL!);
+	// Remove the unused convex variable
 	const courses = await fetchQuery(api.courses.getCourses);
 
 	return (
